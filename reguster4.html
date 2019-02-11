@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Notification Register</title>
+<!-- Include CSS File Here -->
+<link rel="stylesheet" href="style4.css"/>
+<!-- Include JS File Here -->
+<script src="r4.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="main">
+<h2>Notification Register</h2>
+<form id="form_id" method="post" name="myform">
+<label>User phone number :</label>
+<input type="text" name="number" id="number" placeholder="Enter Phone Number" required/>
+
+<label for="carrier"><b>Carrier Type</b></label>
+<BR/>
+<select name="carrier" onChange="showUser(this.value)">
+
+    <option selected="" value="Default">(Please select a carrier type)</option>
+    <option value="1">Verizon</option>
+    <option value="2">AT&T</option>
+    <option value="3">T-mobile</option>
+    <option value="4">Sprint</option>
+    <option value="5">Not on the list</option>
+</select>
+
+<BR/>
+<BR/>
+<label for="route"><b>Shuttle Route</b></label>
+<BR/>
+<li><input type="checkbox" name="East" value="East"  /><span>East</span></li>
+<li><input type="checkbox" name="West" value="West" /><span>West</span></li>
+<li><input type="checkbox" name="latenight" value="latenight" /><span>Weekend Late Night</span></li>
+<BR/>
+
+<p>
+   <input type="button" value="Submit" id="submit" onclick="validate()"/>
+   <input type="button" value="re-Submit" id="resubmit"/>
+
+</p>
+</form>
+<span><b class="note">Note : </b>For this demo use following username and password. <br/><b class="valid">User Name : Formget<br/>Password : formget#123</b></span>
+</div>
+</div>
+</body>
+</html>
