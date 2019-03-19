@@ -2,6 +2,9 @@
 	<div id='select'></div>
 </template>
 
+<!-- selected the stop(and the time) we want to get to??? estimate where to take the shuttle????
+ what if one person wants to take the shuttle from another stop???-->
+ <!--cellclick ->change function to edit or delete the cell???-->
 <script>
 const Tabulator = require('tabulator-tables');
 export default {

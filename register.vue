@@ -13,13 +13,24 @@
             <option value="t-mobile">T-mobile</option>
             <option value="ooredoo">Ooredoo</option>
         </select>
-        <!-- carrier holds value -->
+
+        <!--should add a starting stop (coz students may want to take shuttle from another place)-->
+        <!--add default value to the closest shuttle stop-->
         <h4>Shuttle Stop</h4>
         <select v-model="stop">
             <option disabled selected>Select a Stop</option>
             <option value="union">Student Union</option>
             <option value="b">B</option>
         </select>
+
+        <!-- carrier holds value -->
+        <h4>(destination) Shuttle Stop</h4>
+        <select v-model="stop">
+            <option disabled selected>Select a Stop</option>
+            <option value="union">Student Union</option>
+            <option value="b">B</option>
+        </select>
+        <!--may be still should be select, not checkbox????-->
         <h4>Shuttle Route</h4>
         <input type="checkbox" id="east" value="east" v-model="route">
         <label for="east">East</label>
@@ -40,6 +51,7 @@
         <br>
         <!-- TODO disable button until flag -->
         <button v-on:click="" v-bind:disabled="route == ''">Submit</button>
+        <!--add a reset button???-->
         <br><br><br>
     </div>
 </template>

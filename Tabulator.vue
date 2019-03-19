@@ -38,12 +38,17 @@ export default {
     this.tabulator = new Tabulator('#table', {
 	  data: this.tableData,
 	  columns: this.tableColumn,
-	  layout: 'fitColumns',
+	  //layout: 'fitColumns',
+    layout: 'fitDataFill',
+    resizableRows:true,
+    resizableColumns:true,
     movableRows: true,
     movableRowsConnectedTables: '#select',
     movableRowsReceiver: 'add',
     //movableRowsSender: 'delete',
+    //need add a function in Selected.vue to "undo"
     placeholder: 'All Times Selected',
+    footerElement:"<button>Custom Button</button>",
 	  });
 	},
   
