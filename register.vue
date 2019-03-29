@@ -52,6 +52,7 @@
         <!-- TODO disable button until flag -->
         <button v-on:click="" v-bind:disabled="route == ''">Submit</button>
         <!--add a reset button???-->
+        <button v-on:click="" v-bind:disabled="route == ''">Reset</button>
         <br><br><br>
     </div>
 </template>

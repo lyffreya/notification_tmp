@@ -5,19 +5,46 @@
 <script>
 // npm install tabulator-tables --save
 const Tabulator = require('tabulator-tables');
+var cols = Tabulator.getColumns();
+var rows = Tabulator.getRows();
+
 export var time = '';
 export default {
   data() {
     return {
       tabulator: null,
       tableColumn: [
-      {title: 'Sunday', field: 'su', align: 'center', cellClick: function(e, cell){time=time+cell.getValue()+' '+cell.getColumn().getField()+' ';console.log(time)},}, 
-      {title: 'Monday', field: 'm', align: 'center', cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField())},}, 
-      {title: 'Tuesday', field: 't', align: 'center', cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField())},}, 
-      {title: 'Wednesday', field: 'w', align: 'center', cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField())},}, 
-      {title: 'Thursday', field: 'th', align: 'center', cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField())},}, 
-      {title: 'Friday', field: 'f', align: 'center', cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField())},}, 
-      {title: 'Saturday', field: 'sa', align: 'center', cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField())},} ],
+        {rowHandle:true, formatter:"handle", headerSort:false, frozen:true, width:30, minWidth:30},
+      {title: 'Sunday', field: 'su', align: 'center',
+      headerClick:function(e, column){
+      //e - the click event object
+      //column - column component
+      },
+      cellClick: function(e, cell){time=time+cell.getValue()+' '+cell.getColumn().getField()+' ';console.log(time)},
+      }, 
+      {title: 'Monday', field: 'm', align: 'center',
+        cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField());
+        alert("The cell has a value of:" + cell.getValue()); },//display the cells value
+        
+        // formatter:"tickCross",
+      }, 
+      {title: 'Tuesday', field: 't', align: 'center',
+        cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getField());},
+        //var row = cell.getRow();
+      }, 
+      {title: 'Wednesday', field: 'w', align: 'center',
+        cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField());},
+      }, 
+      {title: 'Thursday', field: 'th', align: 'center',
+        cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField()); 
+        cell.setValue(cell.getValue()+" selected",true);},
+      }, 
+      {title: 'Friday', field: 'f', align: 'center',
+        cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField());},
+      }, 
+      {title: 'Saturday', field: 'sa', align: 'center',
+        cellClick: function(e, cell){console.log(cell.getValue()); console.log(cell.getColumn().getField());},
+      } ],
     
     tableData: [ 
     {id: 1, su: '08:30', m: '08:00', t: '08:00', w: '08:00', th: '08:00', f: '08:00', sa: '08:00'}, 
@@ -33,26 +60,96 @@ export default {
     {id: 11, su: '18:00', m: '18:00', t: '18:00', w: '18:00', th: '18:00', f: '18:00', sa: '18:00'}, ],
 	  addData: {id: null, su: null, m: null, t: null, w: null, th: null, f: null, sa: null},
 	  };
+    
 	},
   mounted() {
     this.tabulator = new Tabulator('#table', {
 	  data: this.tableData,
 	  columns: this.tableColumn,
+    responsiveLayout:"hide", // hide rows that no longer fit
 	  //layout: 'fitColumns',
     layout: 'fitDataFill',
+    history: true,
     resizableRows:true,
     resizableColumns:true,
+    selectable:3,
+  
+    rowClick:function(e, row){
+    //e - the click event object
+    //row - row component
+      row.toggleSelect();
+    },
+    rowDeselected:function(row){
+    //row - row component for the deselected row
+    console.log(row.getData());
+    },
+    
+    /*
+    rowSelectionChanged:function(data, rows){
+        //update selected row counter on selection change
+    	//$("#select-stats span").text(data.length);
+    },
+    */
+    
+
+    //movableRowsSender: "incrementMoved",
     movableRows: true,
     movableRowsConnectedTables: '#select',
     movableRowsReceiver: 'add',
+    
     //movableRowsSender: 'delete',
+    rowMoved:function(row){
+        //row - row component
+    },
     //need add a function in Selected.vue to "undo"
     placeholder: 'All Times Selected',
     footerElement:"<button>Custom Button</button>",
+    history:true,
+    rowFormatter:function(row){
+        var data = row.getData(); //get data object for row
+
+        if(data.col == "blue"){
+            row.getElement().css({"background-color":"#A6A6DF"}); //apply css change to row element
+        }
+    },
 	  });
 	},
   
   methods: {
+    //var row1 = 
+    /*
+    dataLoaded:function(data){ //freeze first row on data load
+		var firstRow = this.getRows()[0];
+
+		if(firstRow){
+			firstRow.freeze();
+		}
+	  },
+    */ 
+    /*
+    //select row on "select" button click
+    $("#select-row").click(function(){
+        table.selectRow(1);
+    });
+
+    //deselect row on "deselect" button click
+    $("#deselect-row").click(function(){
+        table.deselectRow(1);
+    });
+
+    //select row on "select all" button click
+    $("#select-all").click(function(){
+        table.selectRow();
+    });
+
+    //deselect row on "deselect all" button click
+    $("#deselect-all").click(function(){
+        table.deselectRow();
+    });
+    */
+    rowMoved:function(row){
+        console.log("Row: " + row.getData().name + " has been moved");
+    },
     addTabulator() {
 	  const obj = Object.assign({}, this.addData);
 	  obj.id = this.tableData.length;
@@ -71,6 +168,27 @@ export default {
     },
   },
 };
+//select row on "select" button click
+    $("#select-row").click(function(){
+        table.selectRow(1);
+    });
+
+    //deselect row on "deselect" button click
+    $("#deselect-row").click(function(){
+        table.deselectRow(1);
+    });
+
+    //select row on "select all" button click
+    $("#select-all").click(function(){
+        table.selectRow();
+    });
+
+    //deselect row on "deselect all" button click
+    $("#deselect-all").click(function(){
+        table.deselectRow();
+    });
+
+
 </script>
 
 <style>
